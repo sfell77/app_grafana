@@ -20,7 +20,7 @@ module "arch_ec2_asg_elb" {
     listener_port           = var.listener_port
     listener_protocol       = var.listener_protocol
     owner_contact           = var.owner_contact
-    s3_bucket_name          = lookup(var.s3_bucket_name, format("%s.%s", var.app_env, var.aws_region))
+    #s3_bucket_name          = lookup(var.s3_bucket_name, format("%s.%s", var.app_env, var.aws_region))
     subnets                 = lookup(var.app_subnets, format("%s.%s", var.app_env, var.aws_region))
     user_data               = "${file("configs/user_data.sh")}"
     vpc_id                  = lookup(var.vpc_id, format("%s.%s", var.app_env, var.aws_region))

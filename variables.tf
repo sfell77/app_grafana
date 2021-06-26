@@ -18,7 +18,7 @@ variable "app_port" {
 variable "app_subnets" {
     description = "Subnet(s) for the ELB to leverage"
     default = {
-        "dev.us-east-1"     = "subnet-0ea9e47983f203578, subnet-021f28cc2574fc87e"
+        "dev.us-east-1"     = "subnet-0ea9e47983f203578"
     }
 }
 
@@ -53,14 +53,14 @@ variable "owner_contact" {
     description = "Email address/idnetifier of the TEAM responsible for this app"
     default = "sfellin@sfproductions.net"
 }
-
+/*
 variable "s3_bucket_name" {
     description = "We save statefiles to S3 so that they're in a centralized location that's not your laptop. Remember to create buckets PER REGION or you may not have access to your statefiles in the event of a regional outage"
     default = {
         "dev.us-east-1"     = "cribl-test-jlq818"
     }
 }
-
+*/
 variable "vpc_id" {
     description = "VPC your subnets and security groups are contained in"
     default = {
