@@ -46,7 +46,7 @@ variable "s3_bucket_name" {
     }
 }
 
-variable "tag_owner_contact" {
+variable "owner_contact" {
     description = "Email address/idnetifier of the TEAM responsible for this app"
     default = "sfellin@sfproductions.net"
 }
@@ -60,6 +60,6 @@ variable "aws_region" {
     description = "The AWS region you're deploying to.  For example, us-east-1"
 }
 
-variable "tag_deployment_owner" {
+variable "deployment_owner" {
     description = "Email address/identifier of the PERSON deploying this app"
 }

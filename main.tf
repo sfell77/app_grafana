@@ -11,11 +11,11 @@ module "arch_ec2_asg_elb" {
     app_name                = var.app_name
     app_port                = var.app_port
     aws_region              = var.aws_region
+    deployment_owner        = var.deployment_owner
     hc_target               = var.hc_target
+    owner_contact           = var.owner_contact
     s3_bucket_name          = lookup(var.s3_bucket_name, format("%s.%s", var.app_env, var.aws_region))
     subnets                 = lookup(var.app_subnets, format("%s.%s", var.app_env, var.aws_region))
-    tag_deployment_owner    = var.tag_deployment_owner
-    tag_owner_contact       = var.tag_owner_contact
     user_data               = "${file("config/user_data.sh")}"
 }
 
