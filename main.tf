@@ -1,8 +1,11 @@
 terraform {
     required_providers {
         aws = "~> 3.37"
-        region = var.aws_region
     }
+}
+
+provider "aws" {
+    region = var.aws_region
 }
 
 module "arch_ec2_asg_elb" {
