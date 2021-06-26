@@ -27,6 +27,7 @@ variable "hc_target" {
     default = "HTTP:3000/"
 }
 
+/* This should work but here we are...
 variable "listeners" {
     description = "Ingress port configurations for load balancer"
     default = [
@@ -37,6 +38,15 @@ variable "listeners" {
             lb_protocol       = "http"
         }
     ]
+}
+*/
+
+variable "listener_port" {
+    default = 3000
+}
+
+variable "listener_protocol" {
+    default = "http"
 }
 
 variable "owner_contact" {

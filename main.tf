@@ -1,7 +1,8 @@
 terraform {
-  required_providers {
-    aws = "~> 3.37"
-  }
+    required_providers {
+        aws = "~> 3.37"
+        region = var.aws_region
+    }
 }
 
 module "arch_ec2_asg_elb" {
@@ -13,7 +14,8 @@ module "arch_ec2_asg_elb" {
     aws_region              = var.aws_region
     deployment_owner        = var.deployment_owner
     hc_target               = var.hc_target
-    listeners               = var.listeners
+    listener_port           = var.listener_port
+    listener_protocol       = var.listener_protocol
     owner_contact           = var.owner_contact
     s3_bucket_name          = lookup(var.s3_bucket_name, format("%s.%s", var.app_env, var.aws_region))
     subnets                 = lookup(var.app_subnets, format("%s.%s", var.app_env, var.aws_region))
