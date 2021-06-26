@@ -1,3 +1,10 @@
+variable "ami_id" {
+    description = "The AMI ID you'll use for your EC2 (if you're using one).  We don't use 'latest' since that doesn't stay the same, and we potentially haven't validated that it works with our stack"
+    default = {
+        "dev.us-east-1"     = "ami-0aeeebd8d2ab47354"
+    }
+}
+
 variable "app_name" {
     description = "Your app name is used to identify deployed components easier"
     default = "grafana"
@@ -12,13 +19,6 @@ variable "app_subnets" {
     description = "Subnet(s) for the ELB to leverage"
     default = {
         "dev.us-east-1"     = "subnet-0ea9e47983f203578, subnet-021f28cc2574fc87e"
-    }
-}
-
-variable "ami_id" {
-    description = "The AMI ID you'll use for your EC2 (if you're using one).  We don't use 'latest' since that doesn't stay the same, and we potentially haven't validated that it works with our stack"
-    default = {
-        "dev.us-east-1"     = "ami-0aeeebd8d2ab47354"
     }
 }
 
@@ -39,6 +39,11 @@ variable "listeners" {
     ]
 }
 
+variable "owner_contact" {
+    description = "Email address/idnetifier of the TEAM responsible for this app"
+    default = "sfellin@sfproductions.net"
+}
+
 variable "s3_bucket_name" {
     description = "We save statefiles to S3 so that they're in a centralized location that's not your laptop. Remember to create buckets PER REGION or you may not have access to your statefiles in the event of a regional outage"
     default = {
@@ -46,9 +51,11 @@ variable "s3_bucket_name" {
     }
 }
 
-variable "owner_contact" {
-    description = "Email address/idnetifier of the TEAM responsible for this app"
-    default = "sfellin@sfproductions.net"
+variable "vpc_id" {
+    description = "VPC your subnets and security groups are contained in"
+    default = {
+        "dev.us-east-1"     = "vpc-0fe30340eca85a48c"
+    }
 }
 
 # Variables you'll pass at run time -- you can leave these blank unless they're region agnostic
