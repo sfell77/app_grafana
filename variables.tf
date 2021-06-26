@@ -49,13 +49,13 @@ var "tag_owner_contact" {
 var "user_data" {
     description = "What to run inside each EC2 during instantiation"
     default = "
-        # Because I have no idea what your favorite distro is...
-        if [ -n "$(command -v yum)" ]; then
-        yum install docker -y
-        elif [ -n "$(command -v apt-get)" ]; then
-        apt-get install docker -y
+        # Because I have no idea what your favorite distro is... \n
+        if [ -n "$(command -v yum)" ]; then \n
+        yum install docker -y \n
+        elif [ -n "$(command -v apt-get)" ]; then \n
+        apt-get install docker -y \n
 
-        # Install Grafana via constainer (controlled version, of course)
+        # Install Grafana via constainer (controlled version, of course) \n
         docker run -d -p 3000:3000 --name grafana grafana/grafana:6.5.0"
 }
 
