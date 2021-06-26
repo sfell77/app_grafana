@@ -23,7 +23,7 @@ module "arch_ec2_asg_elb" {
     s3_bucket_name          = lookup(var.s3_bucket_name, format("%s.%s", var.app_env, var.aws_region))
     subnets                 = lookup(var.app_subnets, format("%s.%s", var.app_env, var.aws_region))
     user_data               = "${file("configs/user_data.sh")}"
-    vpc_id                  = var.vpc_id
+    vpc_id                  = lookup(var.vpc_id, format("%s.%s", var.app_env, var.aws_region))
 }
 
 # I tend to use variables for EVERYTHING instead of just the things that can't be static-defined (app_name, for example, will always be "Grafana" for Grafana) because this puts ALL the variables into one location (variables.tf) instead of having to bounce around between main and variables.
