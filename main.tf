@@ -21,3 +21,5 @@ module "arch_ec2_asg_elb" {
     tag_deployment_owner    = var.tag_deployment_owner
     user_data               = var.user_data
 }
+
+# I use variables for EVERYTHING instead of just the things that can't be static-defined (app_port, for example, will always be 3000 for Grafana) because this puts ALL the variables into one location (variables.tf) instead of having to bounce around between main and variables.
