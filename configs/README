@@ -1,0 +1,4 @@
+## Config directory
+In a real-world deployment, this directory would have all your applications' config files (especially for something with an UI since we don't make untracked changes, right?).
+
+These would be pulled in @ build time by importing your immutable release packages from Artifactory or equivalent and then deploying to the new instances/containers for inclusion.
