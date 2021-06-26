@@ -5,6 +5,7 @@ provider = "aws" {
 module "arch_ec2_asg_elb" {
     source                  = "git::https://github.com/sfell77/arch_ec2_asg_elb"
     app_name                = var.app_name
+    app_port                = var.app_port
     aws_region              = var.aws_region
     ami_id                  = lookup(var.ami_id, format("%s.%s", var.app_env, var.aws_region))
     deploy_env              = var.deploy_env
@@ -15,8 +16,8 @@ module "arch_ec2_asg_elb" {
     volume_type             = var.ebs_volume_type
     volume_size             = var.ebs_volume_size
     s3_bucket_name          = lookup(var.s3_bucket_name, format("%s.%s", var.app_env, var.aws_region))
+    subnets                 = lookup(var.subnets, format("%s.%s", var.app_env, var.aws_region))
     tag_owner_contact       = var.tag_owner_contact
     tag_deployment_owner    = var.tag_deployment_owner
-    #security_groups         = var.security_groups
     user_data               = var.user_data
 }

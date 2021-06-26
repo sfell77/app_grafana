@@ -3,6 +3,11 @@ var "app_name" {
     default = "grafana"
 }
 
+variable "app_port" {
+    description = "Port your application runs on"
+    default = 3000
+}
+
 var "ami_id" {
     description = "The AMI ID you'll use for your EC2 (if you're using one).  We don't use 'latest' since that doesn't stay the same, and we potentially haven't validated that it works with our stack"
     default = {
