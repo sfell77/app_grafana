@@ -41,6 +41,11 @@ var "tag_owner_contact" {
     default = "sfellin@sfproductions.net"
 }
 
+var "user_data" {
+    description = "What to run inside each EC2 during instantiation"
+    default = ""
+}
+
 
 # Variables you'll pass at run time -- you can leave these blank unless they're region agnostic
 var "aws_region" {

@@ -3,7 +3,7 @@ provider = "aws" {
 }
 
 module "arch_ec2_asg_elb" {
-    source = "git::https://github.com/sfell77/arch_ec2_asg_elb"
+    source                  = "git::https://github.com/sfell77/arch_ec2_asg_elb"
     app_name                = var.app_name
     aws_region              = var.aws_region
     ami_id                  = lookup(var.ami_id, format("%s.%s", var.app_env, var.aws_region))
@@ -18,4 +18,5 @@ module "arch_ec2_asg_elb" {
     tag_owner_contact       = var.tag_owner_contact
     tag_deployment_owner    = var.tag_deployment_owner
     #security_groups         = var.security_groups
+    user_data               = var.user_data
 }
