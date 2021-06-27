@@ -6,7 +6,7 @@ For simplicity, the default `app_env` value, if you use the deploy script below,
 
 ## What you need to provide
 With this configuration, you only need to provide a handful of variables (located in `variables.tf`) in order to deploy Grafana to an ELB:
-|variable name--|desciption|
+|variable name  |desciption|
 |---------------|----------|
 |ami_id         |dev.<aws_region> = "<AMI_ID>"|
 |app_subnets    |dev.<aws_region> = "<SUBNET_ID>"|
