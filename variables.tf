@@ -4,7 +4,8 @@ Buildtime variables are @ the bottom; the only things I'm overriding or initiall
 variable "ami_id" {
     description = "The AMI ID you'll use for your EC2 (if you're using one).  We don't use 'latest' since that doesn't stay the same, and we potentially haven't validated that it works with our stack"
     default = {
-        "dev.us-east-1"     = "ami-0aeeebd8d2ab47354"
+        #"dev.us-east-1"     = "ami-0747bdcabd34c712a" # Ubuntu16.04
+        "dev.us-east-1"     = "ami-0aeeebd8d2ab47354" # AmazonLinux2
     }
 }
 
@@ -21,7 +22,7 @@ variable "app_port" {
 variable "app_subnets" {
     description = "Subnet(s) for the ELB to leverage"
     default = {
-        "dev.us-east-1"     = "subnet-0ea9e47983f203578"
+        "dev.us-east-1"     = "subnet-01234567890123456"
     }
 }
 
@@ -40,17 +41,17 @@ variable "listener_protocol" {
 
 variable "owner_contact" {
     description = "Email address/idnetifier of the TEAM responsible for this app"
-    default = ""
+    default = "your@email.com"
 }
 
 variable "vpc_id" {
     description = "VPC your subnets and security groups are contained in"
     default = {
-        "dev.us-east-1"     = "vpc-0fe30340eca85a48c"
+        "dev.us-east-1"     = "vpc-01234567890123456"
     }
 }
 
-# Variables you'll pass at run time -- you can leave these blank unless they're region agnostic
+# Variables you'll pass at buildtime
 variable "app_env" {
     description = "Denotes dev/qa/prod regions (or whatever values you use); needed for map variables"
 }

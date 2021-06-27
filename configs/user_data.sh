@@ -2,10 +2,13 @@
 
 # And I can't find my handy distro detecting code anywhere  :(
 # One of these will work for most main distros while the non-working will be ignored
-yum install docker -y
-apt-get install docker -y
 
-# start Docker
+# Ubuntu/similar
+apt-get update
+apt install docker.io -y
+
+# RPM-based
+yum install docker -y
 systemctl start docker
 
 # Install Grafana via constainer (controlled version, of course)

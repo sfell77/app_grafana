@@ -9,7 +9,6 @@ This is actually my first ELB deployment (ALB was our norm); wouldn't recommend 
 
 ## What is...
 - For simplicity, the default `app_env` value, if you use the deploy scripts below, is `dev` by default.  Any variables you set which require the `app_env` variable (such as `variable "AMI"`) should use `dev` for this component.
-- I've left all my variables in-place for reference; it's a throw-away VPC so it'll be gone eventually (no security risks).
 - My resources have a Rick and Morty theme going.  Season 5 just came out and I like to remind people that instances are cattle (not pets) and that they are 100% disposable (and should be).
 
 ## What you need to provide
@@ -20,6 +19,8 @@ With this configuration, you only need to provide a handful of variables (locate
 |app_subnets    |dev.<aws_region> = "<SUBNET_ID>"|
 |owner_contact  |"your@email_address"|
 |vpc_id         |dev.<aws_region> = "<VPC_ID>"|
+
+In addition to these variables, the `configs/user_data.sh` file may need to be updated to accommodate your distro of choice; it comes with RPM and Ubuntu/Debian-based install steps but with other distros (or when yum/apt are retired) you'll need to provide what works for your use-case.
 
 ## How to deploy
 First, you must set your AWS environment; secrets/keys should NEVER (ever ever) be saved to repos or passed through anything that will store them (like `history` in terminal).
