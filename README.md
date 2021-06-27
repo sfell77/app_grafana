@@ -8,9 +8,9 @@ Because we work for a bank (and also because I don't think they were available y
 This is actually my first ELB deployment (ALB was our norm); wouldn't recommend it.
 
 ## What is...
-For simplicity, the default `app_env` value, if you use the deploy scripts below, is `dev` by default.  Any variables you set which require the `app_env` variable (such as `variable "AMI"`) should use `dev` for this component.
-
-I've left all my variables in-place for reference; it's a throw-away VPC so it'll be gone eventually (no security risks).
+- For simplicity, the default `app_env` value, if you use the deploy scripts below, is `dev` by default.  Any variables you set which require the `app_env` variable (such as `variable "AMI"`) should use `dev` for this component.
+- I've left all my variables in-place for reference; it's a throw-away VPC so it'll be gone eventually (no security risks).
+- My resources have a Rick and Morty theme going.  Season 5 just came out and I like to remind people that instances are cattle (not pets) and that they are 100% disposable (and should be).
 
 ## What you need to provide
 With this configuration, you only need to provide a handful of variables (located in `variables.tf`) in order to deploy Grafana to an ELB:
@@ -20,7 +20,6 @@ With this configuration, you only need to provide a handful of variables (locate
 |app_subnets    |dev.<aws_region> = "<SUBNET_ID>"|
 |owner_contact  |"your@email_address"|
 |vpc_id         |dev.<aws_region> = "<VPC_ID>"|
-
 
 ## How to deploy
 First, you must set your AWS environment; secrets/keys should NEVER (ever ever) be saved to repos or passed through anything that will store them (like `history` in terminal).
@@ -32,6 +31,11 @@ If you have OAuth/MFA for AWS, you can skip all this -- the end-goal is to have 
 3. Validate that you now have data in the `~/.aws/credentials` file (unless you specify a value, the name of this profile will be `default`)
 4. Type `export AWS_PROFILE=default` if you didn't provide a profile name; use the name provided if you did
 5. Any command you run that invokes AWS, from this point forward, will leverage these credentials under-the-covers
+
+### Get the code
+Maybe you found this repo in the wild and don't know this part?
+1. Clone this repo to your local environment (`git clone https://github.com/sfell77/app_grafana`)
+2. `cd app_grafana`
 
 ### Checking your Terraform
 You need to install, and have available to your environment, Terraform (Google if you don't).  It's been about three years since I've done anything with Terraform and a lot's changed!  This code was written and validated in v1.0.1.  If you're on a v1.x release, you *should* be set to run the below to deploy, once you've made the `variables.tf` changes required above.  All steps are from the `app_grafana` directory:
@@ -53,6 +57,7 @@ Grafana says that the default credentials are `[admin:admin]` and those worked f
 
 ## ...and what should be
 If this was a completely HA strategy, the the minimum design would be:
+- Split `app_port` variable into two; set inbound ELB port to 80 -- I'm sorry; it didn't make it off the to-do list
 - Multiple Grafana instances running in each region (use containers/Fargate and never have to manage EC2s)
 - RDS backend (replicated to another region) to ensure data retention and centralization amongst numerous running instances
 - Route53 entrypoint with failover to alternate region (active/passive) or if you are more geographically diverse, active/active with geolocation routing
