@@ -1,9 +1,8 @@
 #! /bin/bash
 
-# Because I have no idea what your favorite distro is...
-if [ -n "$(command -v yum)" ]; then
+# And I can't find my handy distro detecting code anywhere  :(
+# One of these will work for most main distros while the non-working will be ignored
 yum install docker -y
-elif [ -n "$(command -v apt-get)" ]; then
 apt-get install docker -y
 
 # start Docker
