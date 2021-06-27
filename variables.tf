@@ -24,7 +24,7 @@ variable "app_subnets" {
 
 variable "hc_target" {
     description = "ELB health check -- target"
-    default = "HTTP:3000/"
+    default = "TCP:3000"
 }
 
 /* This should work but here we are...
