@@ -1,8 +1,16 @@
 # app_grafana
 Grafana deployment configuration leveraging a basic HA architecture (not application) strategy.  Go ahead -- delete a running EC2 and watch it spin up a new one!
 
+The design here is based off my experience working with 26 teams deploying 100+ APIs, most of which were public-facing.  This model enabled us, the platform team, to design, manage, and update architecture without substantial impacts or creating work for the application teams, while enforcing structure and standards (like encrypting all those EBS volumes) which is critical at-scale.
+
+Because we work for a bank (and also because I don't think they were available yet when we started), we created our own modules to ensure granular control over all our architecture.
+
+This is actually my first ELB deployment (ALB was our norm); wouldn't recommend it.
+
 ## What is...
-For simplicity, the default `app_env` value, if you use the deploy script below, is `dev` by default.  Any variables you set which require the `app_env` variable should use `dev` for this component.
+For simplicity, the default `app_env` value, if you use the deploy scripts below, is `dev` by default.  Any variables you set which require the `app_env` variable (such as `variable "AMI"`) should use `dev` for this component.
+
+I've left all my variables in-place for reference; it's a throw-away VPC so it'll be gone eventually (no security risks).
 
 ## What you need to provide
 With this configuration, you only need to provide a handful of variables (located in `variables.tf`) in order to deploy Grafana to an ELB:
@@ -28,17 +36,25 @@ If you have OAuth/MFA for AWS, you can skip all this -- the end-goal is to have 
 ### Checking your Terraform
 You need to install, and have available to your environment, Terraform (Google if you don't).  It's been about three years since I've done anything with Terraform and a lot's changed!  This code was written and validated in v1.0.1.  If you're on a v1.x release, you *should* be set to run the below to deploy, once you've made the `variables.tf` changes required above.  All steps are from the `app_grafana` directory:
 1. `terraform init` - this will get Terraform going and it'll pull things together to make sure everything is set for next steps
-2. `terraform apply --var app_env=dev --var aws_region=<enter your region> --var deployment_owner=<enter your email>` - this will actually deploy the application and the architecture in conjunction.  You will be prompted to *actually* deploy once all components are validated
+2. `terraform apply --var app_env=dev --var aws_region=<enter your region> --var deployment_owner=<enter your email>` - this will deploy the application and the architecture in conjunction.  You will be prompted to *actually* deploy once all components are validated
 3. `terraform destroy --var app_env=dev --var aws_region=<enter your region> --var deployment_owner=<enter your email>` - this will delete everything you've deployed; paying for stuff you're not using isn't fun!
 
 ### But I don't have Terraform 1.x
 I didn't either; I got an emergency replacement laptop last week but my old one (sniff, sniff) had v0.11 and I was not able to run almost anything using the old syntax and format against the latest.  So I give you the Docker solution (also run from the `app_grafana` directory):
 1. `docker run -it -v $(pwd):/workspace -w /workspace hashicorp/terraform:light init`
 2. `docker run -it -v $HOME/.aws/credentials:/root/.aws/credentials:ro -v $(pwd):/workspace -w /workspace hashicorp/terraform:light apply --var app_env=dev --var aws_region=<enter your region> --var deployment_owner=<enter your email>`
+
 Remember to `destroy` (run step 2 `s/apply/destroy/` when you're done AND delete any images)
+
+### Cool -- how do I see my stuff?
+I didn't add a Route53 endpoint -- I've gone a lot farther down the rabbit hole than I think you were anticipating and omitted a bunch of stuff because for a test app, it's just over-kill.  You'll have to track down the ELB you generated in AWS console, copy/paste the DNS entry into a browser, and throw `:3000` at the end of it.
+
+Grafana says that the default credentials are `[admin:admin]` and those worked for me.
 
 ## ...and what should be
 If this was a completely HA strategy, the the minimum design would be:
-- multiple Grafana instances running in each region (use containers/Fargate and never have to manage EC2s)
+- Multiple Grafana instances running in each region (use containers/Fargate and never have to manage EC2s)
 - RDS backend (replicated to another region) to ensure data retention and centralization amongst numerous running instances
 - Route53 entrypoint with failover to alternate region (active/passive) or if you are more geographically diverse, active/active with geolocation routing
+- Alerts all over the place for ELB, EC2s, and Route53 health checks hooked to SNS topics
+- ELB log collection and S3 backend since `statefiles` shouldn't be stored locally unless you want to have a *really* bad time later

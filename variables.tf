@@ -1,3 +1,6 @@
+/*
+Buildtime variables are @ the bottom; the only things I'm overriding or initially setting are below
+*/
 variable "ami_id" {
     description = "The AMI ID you'll use for your EC2 (if you're using one).  We don't use 'latest' since that doesn't stay the same, and we potentially haven't validated that it works with our stack"
     default = {
