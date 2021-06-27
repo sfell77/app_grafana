@@ -10,7 +10,7 @@ With this configuration, you only need to provide a handful of variables (locate
 |---------------|----------|
 |ami_id         |dev.<aws_region> = "<AMI_ID>"|
 |app_subnets    |dev.<aws_region> = "<SUBNET_ID>"|
-|owner_contact  |"<your email address>"|
+|owner_contact  |"your@email_address"|
 |vpc_id         |dev.<aws_region> = "<VPC_ID>"|
 
 
