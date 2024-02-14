@@ -11,5 +11,5 @@ apt install docker.io -y
 yum install docker -y
 systemctl start docker
 
-# Install Grafana via constainer (controlled version, of course)
+# Install Grafana via container (controlled version, of course)
 docker run -d -p 3000:3000 --name grafana grafana/grafana:6.5.0
